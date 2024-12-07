@@ -1,1 +1,3 @@
 # DataScience_CapstoneProject_IBM
+
+This repository showcases my capstone project completed as part of the IBM Data Science Professional Certification on Coursera. The project analyzes SpaceX's Falcon 9 launch data to uncover factors influencing the successful landing of its first stage. Key tasks include data collection through the SpaceX REST API and web scraping, exploratory data analysis using SQL and Python, and visualizations with libraries such as Matplotlib, Seaborn, Plotly, and Folium. Additionally, the project involves developing machine learning models to predict the success of Falcon 9's first-stage landings.
