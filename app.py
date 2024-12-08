@@ -102,30 +102,53 @@ app.clientside_callback(
             filtered_data = filtered_data.filter(row => row['Launch Site'] === selected_site);
         }
 
-         // Create scatter plot data
+        // Assign specific colors for each 'Booster Version Category'
+        let color_map = {
+            'v1.0': 'blue',
+            'v1.1': 'green',
+            'FT': 'red',
+            'B4': 'orange',
+            'B5': 'purple',
+        };
+
+        // Group the data by 'Booster Version Category' for legend creation
+        let grouped_data = {};
+        filtered_data.forEach(row => {
+            let category = row['Booster Version Category'];
+            if (!grouped_data[category]) {
+                grouped_data[category] = {
+                    x: [],
+                    y: [],
+                    color: color_map[category],
+                    name: category
+                };
+            }
+            grouped_data[category].x.push(row['Payload Mass (kg)']);
+            grouped_data[category].y.push(row['class']);
+        });
+
+        // Create scatter plot data for each category
+        let trace_data = Object.values(grouped_data).map(group => ({
+            type: 'scatter',
+            x: group.x,
+            y: group.y,
+            mode: 'markers',
+            marker: {
+                color: group.color,
+                size: 10,
+            },
+            name: group.name  // This will appear in the legend, but we will hide it
+        }));
+
+        // Create the final plot layout with no legend
         return {
-            data: [{
-                type: 'scatter',
-                x: filtered_data.map(row => row['Payload Mass (kg)']),
-                y: filtered_data.map(row => row['class']),
-                mode: 'markers',
-                marker: {
-                    color: filtered_data.map(row => row['Booster Version Category'])
-                },
-                name: 'Launch Success'
-            }],
+            data: trace_data,
             layout: {
                 title: 'Correlation between Payload and Success for Selected Site',
                 xaxis: { title: 'Payload Mass (kg)' },
                 yaxis: { title: 'Success (1) / Failure (0)' },
-                showlegend: true,  // Show the legend
-                legend: {
-                    orientation: 'h',  // Horizontal layout for legend
-                    x: 0.5,  // Center the legend
-                    xanchor: 'center',
-                    y: -0.2,  // Position the legend below the plot
-                    yanchor: 'top'
-                }
+                showlegend: false,  // Hide the legend
+                paper_bgcolor: '#f4f4f9',  // Set background to soft gray
             }
         };
     }
