@@ -53,12 +53,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Remove old files from gh-pages
-        run: |
-          git checkout gh-pages
-          rm -rf *
-          git commit -am "Clear old files"
-          git push origin gh-pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@main
