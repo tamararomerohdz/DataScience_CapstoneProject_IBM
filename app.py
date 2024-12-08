@@ -148,8 +148,9 @@ app.clientside_callback(
                 xaxis: { title: 'Payload Mass (kg)' },
                 yaxis: { title: 'Success (1) / Failure (0)' },
                 showlegend: true,  // Keep the legend visible
-                paper_bgcolor: '#f4f4f9',  // Set background to soft gray
+                plot_bgcolor: '#f4f4f9',  // Sets the background color of the plot area
                 legend: {
+                    title: { text: 'Booster Version' },  // Optional: Adds a title to the legend
                     orientation: 'v',  // Vertical orientation for the legend
                     x: 1.05,  // Position the legend on the right side
                     xanchor: 'left',  // Anchor to the left of the legend box
