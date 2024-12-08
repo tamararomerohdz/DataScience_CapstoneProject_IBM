@@ -137,18 +137,25 @@ app.clientside_callback(
                 color: group.color,
                 size: 10,
             },
-            name: group.name  // This will appear in the legend, but we will hide it
+            name: group.name  // This will appear in the legend
         }));
 
-        // Create the final plot layout with no legend
+        // Create the final plot layout with the side legend
         return {
             data: trace_data,
             layout: {
                 title: 'Correlation between Payload and Success for Selected Site',
                 xaxis: { title: 'Payload Mass (kg)' },
                 yaxis: { title: 'Success (1) / Failure (0)' },
-                showlegend: false,  // Hide the legend
+                showlegend: true,  // Keep the legend visible
                 paper_bgcolor: '#f4f4f9',  // Set background to soft gray
+                legend: {
+                    orientation: 'v',  // Vertical orientation for the legend
+                    x: 1.05,  // Position the legend on the right side
+                    xanchor: 'left',  // Anchor to the left of the legend box
+                    y: 0.5,  // Vertically centered
+                    yanchor: 'middle'  // Center vertically
+                }
             }
         };
     }
