@@ -10,6 +10,7 @@ run_app:
 	wget -r http://127.0.0.1:8050/_dash-component-suites/dash/dcc/async-markdown.js
 	wget -r http://127.0.0.1:8050/_dash-component-suites/dash/dcc/async-datepicker.js
 	wget -r http://127.0.0.1:8050/_dash-component-suites/dash/dcc/async-dropdown.js
+	wget -r http://127.0.0.1:8050/_dash-component-suites/dash/dcc/async-slider.js
 
 	wget -r http://127.0.0.1:8050/_dash-component-suites/dash/dash_table/async-table.js
 	wget -r http://127.0.0.1:8050/_dash-component-suites/dash/dash_table/async-highlight.js
