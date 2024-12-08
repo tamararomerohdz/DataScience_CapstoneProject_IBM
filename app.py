@@ -110,12 +110,7 @@ app.clientside_callback(
                 y: filtered_data.map(row => row['class']),
                 mode: 'markers',
                 marker: {
-                    color: filtered_data.map(row => row['Booster Version Category']),
-                    colorscale: 'Viridis',  // Using Viridis colorscale
-                    showscale: true,  // Display the color scale
-                    colorbar: {
-                        title: 'Booster Version Category'  // Adding a colorbar with a title
-                    }
+                    color: filtered_data.map(row => row['Booster Version Category'])
                 },
                 name: 'Launch Success'
             }],
