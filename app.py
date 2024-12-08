@@ -4,6 +4,7 @@ from dash.dependencies import Input, Output
 import numpy as np
 
 # Initialize the Dash app
+# 
 app = dash.Dash(__name__)
 
 # Sample data
