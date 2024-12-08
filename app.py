@@ -27,6 +27,7 @@ app.layout = html.Div(children=[
     html.Div(dcc.Graph(id='success-pie-chart')),
     html.Br(),
 
+    # Store data in the browser to avoid reloading it
     dcc.Store(id='spacex-data', data=spacex_df.to_dict('records')),
 
     html.P("Payload range (Kg):"),
@@ -40,7 +41,7 @@ app.layout = html.Div(children=[
     html.Div(dcc.Graph(id='success-payload-scatter-chart')),
 ])
 
-# Add the client-side callback
+# Add the client-side callback for the pie chart
 app.clientside_callback(
     """
     function(selected_site, spacex_data) {
@@ -85,5 +86,48 @@ app.clientside_callback(
      dd.Input('spacex-data', 'data')]
 )
 
+# Add the client-side callback for the scatter chart
+app.clientside_callback(
+    """
+    function(selected_site, payload_range, spacex_data) {
+        if (!spacex_data) return {data: [], layout: {title: "No Data Available"}};
+        
+        // Filter the data by payload range
+        let filtered_data = spacex_data.filter(row => 
+            row['Payload Mass (kg)'] >= payload_range[0] && 
+            row['Payload Mass (kg)'] <= payload_range[1]
+        );
+        
+        if (selected_site !== 'ALL') {
+            filtered_data = filtered_data.filter(row => row['Launch Site'] === selected_site);
+        }
+
+        // Create scatter plot data
+        return {
+            data: [{
+                type: 'scatter',
+                x: filtered_data.map(row => row['Payload Mass (kg)']),
+                y: filtered_data.map(row => row['class']),
+                mode: 'markers',
+                marker: {
+                    color: filtered_data.map(row => row['Booster Version Category']),
+                    colorscale: 'Viridis'
+                }
+            }],
+            layout: {
+                title: 'Correlation between Payload and Success for Selected Site',
+                xaxis: { title: 'Payload Mass (kg)' },
+                yaxis: { title: 'Success (1) / Failure (0)' }
+            }
+        };
+    }
+    """,
+    dd.Output('success-payload-scatter-chart', 'figure'),
+    [dd.Input('site-dropdown', 'value'),
+     dd.Input('payload-slider', 'value'),
+     dd.Input('spacex-data', 'data')]
+)
+
 if __name__ == '__main__':
     app.run_server(debug=False)
+
