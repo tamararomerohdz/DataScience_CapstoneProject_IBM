@@ -1,5 +1,5 @@
 run_app:
-	python3 app.py & sleep 30
+	python3 ./Scripts/spacex_dash_app.py & sleep 30
 
 	wget -r http://127.0.0.1:8050/
 	wget -r http://127.0.0.1:8050/_dash-layout 
