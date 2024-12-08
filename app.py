@@ -102,7 +102,7 @@ app.clientside_callback(
             filtered_data = filtered_data.filter(row => row['Launch Site'] === selected_site);
         }
 
-        // Create scatter plot data
+         // Create scatter plot data
         return {
             data: [{
                 type: 'scatter',
@@ -111,13 +111,26 @@ app.clientside_callback(
                 mode: 'markers',
                 marker: {
                     color: filtered_data.map(row => row['Booster Version Category']),
-                    colorscale: 'Viridis'
-                }
+                    colorscale: 'Viridis',  // Using Viridis colorscale
+                    showscale: true,  // Display the color scale
+                    colorbar: {
+                        title: 'Booster Version Category'  // Adding a colorbar with a title
+                    }
+                },
+                name: 'Launch Success'
             }],
             layout: {
                 title: 'Correlation between Payload and Success for Selected Site',
                 xaxis: { title: 'Payload Mass (kg)' },
-                yaxis: { title: 'Success (1) / Failure (0)' }
+                yaxis: { title: 'Success (1) / Failure (0)' },
+                showlegend: true,  // Show the legend
+                legend: {
+                    orientation: 'h',  // Horizontal layout for legend
+                    x: 0.5,  // Center the legend
+                    xanchor: 'center',
+                    y: -0.2,  // Position the legend below the plot
+                    yanchor: 'top'
+                }
             }
         };
     }
